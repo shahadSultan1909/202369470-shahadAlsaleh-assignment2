@@ -1,3 +1,4 @@
+/*Design Tokens*/
 :root {
   --bg: #fbf6f8;
   --bg-alt: #f3e7ee;
@@ -25,7 +26,7 @@
 
   --shadow-soft: 0 20px 40px -20px rgba(199, 110, 140, 0.28);
 }
-
+/*Reset & Base*/
 * {
   margin: 0;
   padding: 0;
@@ -86,7 +87,7 @@ img {
   max-width: 14ch;
 }
 
-
+/*Navbar*/
 .navbar {
   position: sticky;
   top: 0;
@@ -512,9 +513,67 @@ img {
   transform: translateX(4px);
 }
 
-/* =========================================
-   Contact Section
-   ========================================= */
+/* Expand / Collapse (project details) */
+.details-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 8px 16px;
+  background: transparent;
+  border: 1.5px solid var(--rose-deep);
+  color: var(--rose-deep);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s;
+}
+
+.details-toggle:hover,
+.details-toggle:focus-visible {
+  background: var(--rose-deep);
+  color: #fff;
+}
+
+.toggle-icon {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+/* "+" turns into "×" when open */
+.details-toggle[aria-expanded="true"] .toggle-icon {
+  transform: rotate(45deg);
+}
+
+/* Smooth height animation: 0fr (closed) -> 1fr (open) */
+.project-details {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease;
+}
+
+.project-details.open {
+  grid-template-rows: 1fr;
+}
+
+.details-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.details-inner h4 {
+  margin: 16px 0 4px;
+  font-size: 0.95rem;
+  color: var(--rose-deep);
+}
+
+.details-inner p {
+  margin: 0;
+}
+
+/*Contact Section*/
 .contact {
   background: var(--bg-alt);
 }
