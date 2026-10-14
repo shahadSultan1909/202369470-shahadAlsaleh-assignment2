@@ -547,6 +547,7 @@ img {
   transform: rotate(45deg);
 }
 
+
 /* Smooth height animation: 0fr (closed) -> 1fr (open) */
 .project-details {
   display: grid;
@@ -571,6 +572,60 @@ img {
 
 .details-inner p {
   margin: 0;
+}
+
+
+/* GitHub repo stats (loaded from the GitHub API) */
+.repo-stats .repo-status {
+  margin: 14px 0 0;
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+
+/* Loading: gentle pulsing text */
+.repo-stats .repo-status.loading {
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.45; }
+  50%      { opacity: 1; }
+}
+
+/* Error: friendly red message */
+.repo-stats .repo-status.error {
+  color: #c15c73;
+}
+
+/* Loaded data: updated date, stars, language */
+.repo-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 14px;
+  font-size: 0.84rem;
+  color: var(--ink-soft);
+}
+
+/* "Try again" button */
+.retry-btn {
+  margin-top: 8px;
+  padding: 5px 14px;
+  background: transparent;
+  border: 1.5px solid var(--rose-deep);
+  color: var(--rose-deep);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s;
+}
+
+.retry-btn:hover,
+.retry-btn:focus-visible {
+  background: var(--rose-deep);
+  color: #fff;
 }
 
 /*Contact Section*/
