@@ -602,9 +602,30 @@ img {
   display: flex;
   flex-wrap: wrap;
   gap: 8px 18px;
-  margin-top: 14px;
+  margin-top: 6px;
   font-size: 0.84rem;
   color: var(--ink-soft);
+}
+
+/* Small label that shows the data is live from the API */
+.repo-stats .repo-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 14px 0 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.repo-stats .repo-label::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #6fb88e;
 }
 
 /* "Try again" button */
