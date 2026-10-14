@@ -74,6 +74,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function validateField(input, errorEl, condition, message) {
     if (!condition) {
+      // Remove the class and force a reflow so the shake/slide
+      // animations can restart on every failed submit
+      input.classList.remove('invalid');
+      errorEl.textContent = '';
+      void input.offsetWidth;
+
       input.classList.add('invalid');
       errorEl.textContent = message;
       return false;
