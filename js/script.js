@@ -194,35 +194,66 @@ document.addEventListener('DOMContentLoaded', () => {
     box.appendChild(message);
   }
 
+  // Shows a friendly error message with a "Try again" button
+  function showError(box) {
+    showStatus(box, "Couldn't load GitHub info right now.", 'error');
+
+    const retryButton = document.createElement('button');
+    retryButton.type = 'button';
+    retryButton.className = 'retry-btn';
+    retryButton.textContent = 'Try again';
+    retryButton.addEventListener('click', () => loadRepoStats(box));
+    box.appendChild(retryButton);
+  }
+
   async function loadRepoStats(box) {
     const repo = box.dataset.repo; // e.g. "shahad1233/File-System-Simulator"
     showStatus(box, 'Loading GitHub info…', 'loading');
 
-    const response = await fetch(`https://api.github.com/repos/${repo}`);
-    const data = await response.json();
+    try {
+      const response = await fetch(`https://api.github.com/repos/${repo}`);
 
-    // Build the list of details to show
-    const details = [
-      `Updated ${formatDate(data.pushed_at)}`,
-      `★ ${data.stargazers_count}`
-    ];
-    if (data.language) {
-      details.push(data.language); // some repos have no detected language (null)
+      // fetch only fails on network problems; a 404 or 403 still "succeeds",
+      // so we check response.ok and throw our own error
+      if (!response.ok) {
+        throw new Error(`GitHub responded with status ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      // Build the list of details to show
+      const details = [
+        `Updated ${formatDate(data.pushed_at)}`,
+        `Branch: ${data.default_branch}`
+      ];
+      if (data.stargazers_count > 0) {
+        details.push(`★ ${data.stargazers_count}`); // hide the star when it is 0
+      }
+      if (data.language) {
+        details.push(data.language); // some repos have no detected language (null)
+      }
+
+      const label = document.createElement('p');
+      label.className = 'repo-label';
+      label.textContent = 'Live from GitHub';
+
+      const list = document.createElement('ul');
+      list.className = 'repo-meta';
+      details.forEach((text) => {
+        const item = document.createElement('li');
+        item.textContent = text;
+        list.appendChild(item);
+      });
+
+      box.textContent = '';
+      box.append(label, list);
+    } catch (error) {
+      console.error(error); // technical details stay in the console
+      showError(box);
     }
-
-    const list = document.createElement('ul');
-    list.className = 'repo-meta';
-    details.forEach((text) => {
-      const item = document.createElement('li');
-      item.textContent = text;
-      list.appendChild(item);
-    });
-
-    box.textContent = '';
-    box.appendChild(list);
   }
 
-  document.querySelectorAll('.repo-stats').forEach(loadRepoStats); 
+  document.querySelectorAll('.repo-stats').forEach(loadRepoStats);
 
   /* Footer Year */
   document.getElementById('year').textContent = new Date().getFullYear();
