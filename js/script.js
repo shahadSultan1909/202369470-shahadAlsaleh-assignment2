@@ -221,10 +221,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const data = await response.json();
 
-      // Build the list of details to show
+      // Always show the creation and update dates;
+      // the star count only appears when the repo has at least one star
       const details = [
-        `Updated ${formatDate(data.pushed_at)}`,
-        `Branch: ${data.default_branch}`
+        `Created ${formatDate(data.created_at)}`,
+        `Updated ${formatDate(data.pushed_at)}`
       ];
       if (data.stargazers_count > 0) {
         details.push(`★ ${data.stargazers_count}`); // hide the star when it is 0
