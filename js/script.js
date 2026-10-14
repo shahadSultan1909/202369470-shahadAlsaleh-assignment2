@@ -122,6 +122,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  /*Expand / Collapse Project Details*/
+  document.querySelectorAll('.details-toggle').forEach((button) => {
+    button.addEventListener('click', () => {
+      // aria-controls holds the id of the section this button controls
+      const details = document.getElementById(button.getAttribute('aria-controls'));
+      const isOpen = details.classList.toggle('open');
+
+      button.setAttribute('aria-expanded', isOpen);
+      button.querySelector('.toggle-label').textContent = isOpen ? 'Show less' : 'Show more';
+    });
+  });
+
   /* Footer Year */
   document.getElementById('year').textContent = new Date().getFullYear();
 
