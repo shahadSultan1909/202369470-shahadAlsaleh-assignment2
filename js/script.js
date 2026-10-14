@@ -122,15 +122,50 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /*Expand / Collapse Project Details*/
-  document.querySelectorAll('.details-toggle').forEach((button) => {
-    button.addEventListener('click', () => {
-      // aria-controls holds the id of the section this button controls
-      const details = document.getElementById(button.getAttribute('aria-controls'));
-      const isOpen = details.classList.toggle('open');
+  /*Expand / Collapse Project Details (remembered)*/
+  const STORAGE_KEY = 'openProjects';
 
-      button.setAttribute('aria-expanded', isOpen);
-      button.querySelector('.toggle-label').textContent = isOpen ? 'Show less' : 'Show more';
+  function loadOpenProjects() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function saveOpenProjects(ids) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
+    } catch (error) {
+      // Storage can be blocked (e.g. private mode); the toggles still work
+    }
+  }
+
+  // Applies the open/closed look to one button + panel
+  function setOpen(button, details, isOpen) {
+    details.classList.toggle('open', isOpen);
+    button.setAttribute('aria-expanded', isOpen);
+    button.querySelector('.toggle-label').textContent = isOpen ? 'Show less' : 'Show more';
+  }
+
+  const openProjects = loadOpenProjects();
+
+  document.querySelectorAll('.details-toggle').forEach((button) => {
+    const id = button.getAttribute('aria-controls');
+    const details = document.getElementById(id);
+
+    // Restore the saved state when the page loads
+    setOpen(button, details, openProjects.includes(id));
+
+    button.addEventListener('click', () => {
+      const isOpen = !details.classList.contains('open');
+      setOpen(button, details, isOpen);
+
+      // Keep the saved list in sync with what is open now
+      const index = openProjects.indexOf(id);
+      if (isOpen && index === -1) openProjects.push(id);
+      if (!isOpen && index !== -1) openProjects.splice(index, 1);
+      saveOpenProjects(openProjects);
     });
   });
 
