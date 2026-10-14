@@ -175,7 +175,58 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  /* ---------- GitHub Repo Stats (GitHub API) ---------- */
+  // Turns "2026-06-12T00:59:53Z" into "Jun 12, 2026"
+  function formatDate(isoString) {
+    return new Date(isoString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  }
+
+  // Replaces the content of a box with one status message
+  function showStatus(box, text, className) {
+    const message = document.createElement('p');
+    message.className = 'repo-status ' + className;
+    message.textContent = text;
+    box.textContent = '';
+    box.appendChild(message);
+  }
+
+  async function loadRepoStats(box) {
+    const repo = box.dataset.repo; // e.g. "shahad1233/File-System-Simulator"
+    showStatus(box, 'Loading GitHub info…', 'loading');
+
+    const response = await fetch(`https://api.github.com/repos/${repo}`);
+    const data = await response.json();
+
+    // Build the list of details to show
+    const details = [
+      `Updated ${formatDate(data.pushed_at)}`,
+      `★ ${data.stargazers_count}`
+    ];
+    if (data.language) {
+      details.push(data.language); // some repos have no detected language (null)
+    }
+
+    const list = document.createElement('ul');
+    list.className = 'repo-meta';
+    details.forEach((text) => {
+      const item = document.createElement('li');
+      item.textContent = text;
+      list.appendChild(item);
+    });
+
+    box.textContent = '';
+    box.appendChild(list);
+  }
+
+  document.querySelectorAll('.repo-stats').forEach(loadRepoStats); 
+
   /* Footer Year */
   document.getElementById('year').textContent = new Date().getFullYear();
 
 });
+
+
