@@ -642,7 +642,27 @@ img {
   margin-bottom: 6px;
 }
 
+/* GitHub repo info (loaded from the GitHub API) */
+.project-body .repo-meta {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--muted);
+  margin-top: -6px;
+  margin-bottom: 14px;
+}
 
+.project-body .repo-meta.is-loading {
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+.project-body .repo-meta.is-error {
+  color: var(--error);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.4; }
+}
 /* =========================================
    Contact Section
    ========================================= */
@@ -837,5 +857,6 @@ img {
   }
   * {
     transition: none !important;
+    animation: none !important;
   }
 }
