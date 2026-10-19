@@ -1,11 +1,56 @@
 /* 
    script.js
-   Handles: mobile nav toggle, smooth scrolling,
+   Handles: dark/light theme toggle (localStorage),mobile nav toggle, smooth scrolling,
    time-based greeting, contact form validation, expandable project details,
    and footer year.
     */
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    /* Dark/Light Theme Toggle (saved in localStorage) */
+  const root = document.documentElement;
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeIcon = themeToggle.querySelector('.theme-icon');
+
+  function applyTheme(theme) {
+    const isDark = theme === 'dark';
+
+    if (isDark) {
+      root.setAttribute('data-theme', 'dark');
+    } else {
+      root.removeAttribute('data-theme');
+    }
+
+    themeIcon.textContent = isDark ? '☀️' : '🌙';
+    themeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+  }
+
+  function getSavedTheme() {
+    try {
+      return localStorage.getItem('theme');
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function saveTheme(theme) {
+    try {
+      localStorage.setItem('theme', theme);
+    } catch (error) {
+      // Storage unavailable (e.g. private browsing): theme still works for this visit
+    }
+  }
+
+  // On page load: saved choice first, otherwise follow the device setting
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(getSavedTheme() || (prefersDark ? 'dark' : 'light'));
+
+  // On click: switch theme and remember the choice
+  themeToggle.addEventListener('click', () => {
+    const newTheme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(newTheme);
+    saveTheme(newTheme);
+  });
 
   /*Mobile Navigation Toggle*/
   const hamburger = document.getElementById('hamburger');
