@@ -310,12 +310,15 @@
 
         <div class="form-group">
           <label for="message">Message</label>
-          <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
-          <span class="error-message" id="message-error"></span>
+          <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required aria-describedby="message-counter"></textarea>
+          <div class="field-footer">
+            <span class="error-message" id="message-error"></span>
+            <span class="char-counter" id="message-counter">0 / 10 characters minimum</span>
+          </div>
         </div>
 
         <button type="submit" class="btn-primary">Send Message</button>
-        <p class="form-success" id="form-success">Thanks! Your message has been received. 🌸</p>
+        <p class="form-success" id="form-success" role="status" aria-live="polite">Thanks! Your message has been received. 🌸</p>
       </form>
     </div>
   </section>
