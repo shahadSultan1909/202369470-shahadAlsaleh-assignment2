@@ -1,7 +1,7 @@
 /* 
    script.js
    Handles: mobile nav toggle, smooth scrolling,
-   time-based greeting, contact form validation,
+   time-based greeting, contact form validation, expandable project details,
    and footer year.
     */
 
@@ -119,6 +119,21 @@ document.addEventListener('DOMContentLoaded', () => {
   [nameInput, emailInput, messageInput].forEach(input => {
     input.addEventListener('input', () => {
       input.classList.remove('invalid');
+    });
+  });
+
+  /* Expandable Project Details */
+  const detailToggles = document.querySelectorAll('.details-toggle');
+
+  detailToggles.forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const panel = document.getElementById(toggle.getAttribute('aria-controls'));
+      const label = toggle.querySelector('.toggle-label');
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+      panel.classList.toggle('open', !isOpen);
+      label.textContent = isOpen ? 'Show more' : 'Show less';
     });
   });
 
