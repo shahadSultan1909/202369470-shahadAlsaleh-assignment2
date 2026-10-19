@@ -1,9 +1,9 @@
-/* 
+/*
    script.js
-   Handles: dark/light theme toggle (localStorage),mobile nav toggle, smooth scrolling,
-   time-based greeting, contact form validation, expandable project details,
-   and footer year.
-    */
+   Handles: dark/light theme toggle (localStorage), mobile nav toggle,
+   smooth scrolling, time-based greeting, contact form validation,
+   expandable project details, GitHub repo info (API), and footer year.
+*/
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -181,6 +181,41 @@ document.addEventListener('DOMContentLoaded', () => {
       label.textContent = isOpen ? 'Show more' : 'Show less';
     });
   });
+
+
+    /* GitHub Repo Info (fetched from the public GitHub API) */
+  const repoMetaEls = document.querySelectorAll('.repo-meta[data-repo]');
+
+  function formatDate(isoString) {
+    return new Date(isoString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  }
+
+  async function loadRepoInfo(metaEl) {
+    const repo = metaEl.dataset.repo;
+
+    try {
+      const response = await fetch(`https://api.github.com/repos/${repo}`);
+
+      if (!response.ok) {
+        throw new Error(`GitHub responded with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      metaEl.textContent = `Created ${formatDate(data.created_at)} · Updated ${formatDate(data.pushed_at)}`;
+    } catch (error) {
+      metaEl.textContent = "Couldn't load GitHub info. Please refresh the page or try again later.";
+      metaEl.classList.add('is-error');
+      console.error(`Failed to load GitHub info for ${repo}:`, error);
+    } finally {
+      metaEl.classList.remove('is-loading');
+    }
+  }
+
+  repoMetaEls.forEach(loadRepoInfo);
 
   /* Footer Year */
   document.getElementById('year').textContent = new Date().getFullYear();
