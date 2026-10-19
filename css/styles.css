@@ -24,6 +24,36 @@
   --font-body: 'Inter', sans-serif;
 
   --shadow-soft: 0 20px 40px -20px rgba(199, 110, 140, 0.28);
+
+   --nav-bg: rgba(251, 246, 248, 0.82);
+  --error: #c15c73;
+  --success-bg: #a9d2ba;
+  --success-text: #3f6b52;
+}
+
+/* Dark theme: same variable names, darker values */
+:root[data-theme="dark"] {
+  --bg: #1d1820;
+  --bg-alt: #251f29;
+  --surface: #2d2632;
+
+  --ink: #f3eaf0;
+  --ink-soft: #cdbfc9;
+  --muted: #9a8b97;
+
+  --rose-deep: #e8a3bb;
+  --lilac: #9c84bd;
+
+  --line: #3a3140;
+
+  --shadow-soft: 0 20px 40px -20px rgba(0, 0, 0, 0.6);
+
+  --nav-bg: rgba(29, 24, 32, 0.82);
+  --error: #ef8fa5;
+  --success-bg: #2f4a3b;
+  --success-text: #b8e2c8;
+
+  color-scheme: dark;
 }
 
 * {
@@ -91,7 +121,7 @@ img {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(251, 246, 248, 0.82);
+    background: var(--nav-bg);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
 }
@@ -165,6 +195,38 @@ img {
   background: var(--ink);
   border-radius: 2px;
   transition: all 0.3s ease;
+}
+
+/* Nav actions: theme toggle + hamburger */
+.nav-container nav {
+  margin-left: auto;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 24px;
+}
+
+/* Dark/light theme toggle button */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  font-size: 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+  border-color: var(--rose-deep);
+  transform: rotate(-15deg);
 }
 
 /*Hero (introduction)*/
@@ -643,11 +705,11 @@ img {
 
 .form-group input.invalid,
 .form-group textarea.invalid {
-  border-color: #d67d90;
+  border-color: var(--error);
 }
 
 .error-message {
-  color: #c15c73;
+  color: var(--error);
   font-size: 0.8rem;
   margin-top: 5px;
   min-height: 1em;
@@ -657,9 +719,9 @@ img {
   display: none;
   margin-top: 18px;
   text-align: center;
-  color: #3f6b52;
+  color: var(--success-text);
   font-weight: 600;
-  background: var(--sage);
+  background: var(--success-bg);
   padding: 13px;
   border-radius: var(--radius-sm);
 }
