@@ -748,6 +748,45 @@ img {
 
 .form-success.show {
   display: block;
+  animation: fade-slide-in 0.4s ease;
+}
+
+/* Field footer: error message (left) + character counter (right) */
+.field-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.char-counter {
+  flex-shrink: 0;
+  margin-top: 5px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  transition: color 0.2s ease;
+}
+
+.char-counter.is-complete {
+  color: var(--success-text);
+}
+
+/* Shake animation for invalid fields */
+.form-group input.shake,
+.form-group textarea.shake {
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+/* Success message entrance */
+@keyframes fade-slide-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /*Footer */
