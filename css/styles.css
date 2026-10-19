@@ -512,6 +512,75 @@ img {
   transform: translateX(4px);
 }
 
+
+/* Expandable Project Details */
+
+/* "Show more" button */
+.details-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 8px 18px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--rose-deep);
+  background: transparent;
+  border: 1.5px solid var(--rose);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.details-toggle:hover {
+  background: var(--rose-deep);
+  border-color: var(--rose-deep);
+  color: var(--surface);
+}
+
+/* The + icon rotates into an × when the panel is open */
+.toggle-icon {
+  display: inline-block;
+  font-size: 1.1rem;
+  line-height: 1;
+  transition: transform 0.3s ease;
+}
+
+.details-toggle[aria-expanded="true"] .toggle-icon {
+  transform: rotate(45deg);
+}
+
+/* Panel: collapsed by default (0fr), expands to full height (1fr) */
+.project-details {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows 0.35s ease, visibility 0.35s;
+}
+
+.project-details.open {
+  grid-template-rows: 1fr;
+  visibility: visible;
+}
+
+.details-inner {
+  overflow: hidden;
+  min-height: 0;
+  border-left: 2px solid var(--lilac);
+  padding-left: 18px;
+}
+
+.details-inner h4 {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-top: 20px;
+  margin-bottom: 6px;
+}
+
+
 /* =========================================
    Contact Section
    ========================================= */
