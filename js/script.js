@@ -1,7 +1,7 @@
 /*
    script.js
    Handles: dark/light theme toggle (localStorage), mobile nav toggle,
-   smooth scrolling, time-based greeting, contact form validation,
+   smooth scrolling, time-based greeting, contact form (validation, live feedback, animations),
    expandable project details, GitHub repo info (API), and footer year.
 */
 
@@ -104,18 +104,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   greetingEl.textContent = greetingText;
 
-  /*Contact Form Validation*/
+    /* Contact Form: validation, live feedback, and animations */
   const form = document.getElementById('contact-form');
   const nameInput = document.getElementById('name');
   const emailInput = document.getElementById('email');
   const messageInput = document.getElementById('message');
   const successMsg = document.getElementById('form-success');
+  const messageCounter = document.getElementById('message-counter');
 
   const nameError = document.getElementById('name-error');
   const emailError = document.getElementById('email-error');
   const messageError = document.getElementById('message-error');
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const MIN_MESSAGE_LENGTH = 10;
+  let successTimer;
 
   function validateField(input, errorEl, condition, message) {
     if (!condition) {
@@ -129,42 +132,98 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    successMsg.classList.remove('show');
-
-    const isNameValid = validateField(
+  function validateName() {
+    return validateField(
       nameInput, nameError,
       nameInput.value.trim().length >= 2,
       'Please enter your name (at least 2 characters).'
     );
+  }
 
-    const isEmailValid = validateField(
+  function validateEmail() {
+    return validateField(
       emailInput, emailError,
       emailPattern.test(emailInput.value.trim()),
       'Please enter a valid email address.'
     );
+  }
 
-    const isMessageValid = validateField(
+  function validateMessage() {
+    return validateField(
       messageInput, messageError,
-      messageInput.value.trim().length >= 10,
-      'Message should be at least 10 characters.'
+      messageInput.value.trim().length >= MIN_MESSAGE_LENGTH,
+      `Message should be at least ${MIN_MESSAGE_LENGTH} characters.`
     );
+  }
 
-    if (isNameValid && isEmailValid && isMessageValid) {
-      successMsg.classList.add('show');
-      form.reset();
-
-      setTimeout(() => {
-        successMsg.classList.remove('show');
-      }, 4000);
-    }
-  });
+  // Shake an invalid field once (the class is removed when the animation ends)
+  function shakeField(input) {
+    input.classList.add('shake');
+  }
 
   [nameInput, emailInput, messageInput].forEach(input => {
-    input.addEventListener('input', () => {
-      input.classList.remove('invalid');
+    input.addEventListener('animationend', () => {
+      input.classList.remove('shake');
     });
+  });
+
+  // Live character counter for the message field
+  function updateCounter() {
+    const length = messageInput.value.trim().length;
+    messageCounter.textContent = `${length} / ${MIN_MESSAGE_LENGTH} characters minimum`;
+    messageCounter.classList.toggle('is-complete', length >= MIN_MESSAGE_LENGTH);
+  }
+
+  messageInput.addEventListener('input', updateCounter);
+
+  // Validate when the user leaves a field, and re-check live once a field has an error
+  function addLiveValidation(input, validate) {
+    input.addEventListener('blur', () => {
+      if (input.value.trim() !== '') {
+        validate();
+      }
+    });
+
+    input.addEventListener('input', () => {
+      if (input.classList.contains('invalid')) {
+        validate();
+      }
+    });
+  }
+
+  addLiveValidation(nameInput, validateName);
+  addLiveValidation(emailInput, validateEmail);
+  addLiveValidation(messageInput, validateMessage);
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    successMsg.classList.remove('show');
+    clearTimeout(successTimer);
+
+    const fields = [
+      { input: nameInput, isValid: validateName() },
+      { input: emailInput, isValid: validateEmail() },
+      { input: messageInput, isValid: validateMessage() }
+    ];
+
+    const invalidFields = fields.filter(field => !field.isValid);
+
+    if (invalidFields.length > 0) {
+      invalidFields.forEach(field => shakeField(field.input));
+      invalidFields[0].input.focus();
+      return;
+    }
+
+    const firstName = nameInput.value.trim().split(' ')[0];
+    successMsg.textContent = `Thanks, ${firstName}! Your message has been received. I'll get back to you soon. 🌸`;
+    successMsg.classList.add('show');
+
+    form.reset();
+    updateCounter();
+
+    successTimer = setTimeout(() => {
+      successMsg.classList.remove('show');
+    }, 5000);
   });
 
   /* Expandable Project Details */
