@@ -34,7 +34,7 @@
 /* Dark theme: same variable names, darker values */
 :root[data-theme="dark"] {
   --bg: #1d1820;
-  --bg-alt: #251f29;
+  --bg-alt: #2a2330;
   --surface: #2d2632;
 
   --ink: #f3eaf0;
