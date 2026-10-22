@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return validateField(
       nameInput, nameError,
       nameInput.value.trim().length >= 2,
-      'Please enter your name (at least 2 characters).'
+      'Name must contain at least 2 characters.'
     );
   }
 
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return validateField(
       emailInput, emailError,
       emailPattern.test(emailInput.value.trim()),
-      'Please enter a valid email address.'
+      'Please provide a valid email.'
     );
   }
 
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return validateField(
       messageInput, messageError,
       messageInput.value.trim().length >= MIN_MESSAGE_LENGTH,
-      `Message should be at least ${MIN_MESSAGE_LENGTH} characters.`
+      `Your message must be at least ${MIN_MESSAGE_LENGTH} characters long.`
     );
   }
 
@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const firstName = nameInput.value.trim().split(' ')[0];
-    successMsg.textContent = `Thanks, ${firstName}! Your message has been received. I'll get back to you soon. 🌸`;
+    successMsg.textContent = `Thanks for reaching out, ${firstName}! I’ve received your message and will reply as soon as possible. `;
     successMsg.classList.add('show');
 
     form.reset();
@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await response.json();
       metaEl.textContent = `Created ${formatDate(data.created_at)} · Updated ${formatDate(data.pushed_at)}`;
     } catch (error) {
-      metaEl.textContent = "Couldn't load GitHub info. Please refresh the page or try again later.";
+      metaEl.textContent = "We couldn't fetch GitHub data. Please refresh the page or try again in a moment.";
       metaEl.classList.add('is-error');
       console.error(`Failed to load GitHub info for ${repo}:`, error);
     } finally {
