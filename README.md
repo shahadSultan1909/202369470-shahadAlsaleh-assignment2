@@ -27,7 +27,7 @@ frameworks, libraries, or backend.
 |---|---|---|
 | **Expandable project details** | Each project has a **Show more** button that opens a panel with my biggest challenge and what I learned. The panel slides open smoothly and the **+** icon turns into **×**. | Click **Show more** under any project, then click **Show less** to close it. |
 | **Dark / light theme** | A 🌙 / ☀️ button in the navbar switches the theme. The choice is saved in `localStorage`, so it is remembered on the next visit. On a first visit, the site follows the device's theme setting. | Click the 🌙 button, then refresh the page: the dark theme stays. |
-| **Live GitHub repo info** | Each project shows when its repository was created and last updated, fetched from the public GitHub API. A pulsing **Loading…** message appears while the data loads, and a friendly error message appears if the request fails. | Open the Projects section and watch the dates load under each title. |
+| **Live GitHub repo info** | Each project shows when its repository was created and last updated, fetched from the public GitHub API. A pulsing **Loading…** message appears while the data loads, and a friendly error message with a **Try again** button appears if the request fails. | Open the Projects section and watch the dates load under each title. |
 | **Improved contact form** | Fields are checked when you leave them, errors disappear as soon as they are fixed, invalid fields shake on submit, a live counter shows the message length, and the success message greets you by name. | Leave a field empty or type an invalid email and press **Send Message**. |
 
 ### Features carried over from Assignment 1
@@ -65,7 +65,7 @@ No installation or build tools are required. This is a static website.
 
 > **Note:** An internet connection is needed to load the Google Fonts
 > and the live GitHub repository info. Without it, the site still works,
-> and the projects show a friendly "Couldn't load GitHub info" message.
+> and the projects show a friendly "Couldn't load GitHub info" message with a **Try again** button.
 
 ---
 
