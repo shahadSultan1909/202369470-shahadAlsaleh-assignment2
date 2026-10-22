@@ -124,6 +124,18 @@ own decisions throughout:
 - **Reviewed the documentation drafts:** I read and checked the README,
   technical documentation, and this report against what I actually did,
   and edited them before committing.
+- **Edited the AI output after building the features:** after finishing
+  all features, I went back and made my own changes: I rewrote all error
+  and success messages in my own words, made the shake stronger (±8px,
+  0.7s) because it was easy to miss, made the project details open faster
+  (0.25s, ease-in-out), added a soft background to the project hover, and
+  changed the dates to full month names. I also tested ideas and removed
+  them when they did not work: showing each repo's language (the API
+  returns `null` for all three) and rounded corners on the hover.
+- **Fixed problems I found while testing:** the new hover was almost
+  invisible in dark mode, so I lightened the dark `--bg-alt` color. I also
+  fixed a broken closing tag that stopped project 2's button from working,
+  and cleaned up inconsistent indentation.
 
 ---
 
