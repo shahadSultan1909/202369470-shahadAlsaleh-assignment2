@@ -234,7 +234,7 @@ finally → remove the .is-loading class (stop the pulse)
   push, which is more meaningful than `updated_at`, which also changes
   when a repo is starred). Dates are formatted with
   `toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })`,
-  for example `Jun 12, 2026`.
+  for example `June 12, 2026`.
 - **Feedback states:**
 
 | State | What the user sees | CSS |
@@ -264,7 +264,7 @@ and **how** feedback is shown.
 | One validator per field | `validateName()`, `validateEmail()`, `validateMessage()`, each reusing the original `validateField()` helper, so the same rules run on submit, on blur, and while typing. |
 | Check on leaving a field | `blur` listener, only if the field is not empty, so tabbing through an empty form does not show errors. |
 | Errors clear as soon as fixed | `input` listener that re-validates only while the field has the `.invalid` class. |
-| Shake on submit | Invalid fields get a `.shake` class (`@keyframes shake`: ±6px horizontally over 0.7s). An `animationend` listener removes the class so the field can shake again on the next submit. |
+| Shake on submit | Invalid fields get a `.shake` class (`@keyframes shake`: ±8px horizontally over 0.7s). An `animationend` listener removes the class so the field can shake again on the next submit. |
 | Focus the first error | `invalidFields[0].input.focus()` (uses `Array.filter` to collect the invalid fields). |
 | Character counter | `input` listener updates "`n` / 10 characters minimum". It turns green (`.is-complete`) at 10. It uses `.trim().length`, the same as the validator. The minimum lives in one constant, `MIN_MESSAGE_LENGTH`. |
 | Personalized success | "Thanks for reaching out, *FirstName*! I’ve received your message and will reply as soon as possible.". Inserted with `textContent` (never `innerHTML`) so user input cannot inject HTML. |
