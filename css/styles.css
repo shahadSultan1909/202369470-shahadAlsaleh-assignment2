@@ -476,11 +476,12 @@ img {
   align-items: start;
   padding: 44px 0;
   border-bottom: 1px solid var(--line);
-  transition: padding-left 0.25s ease;
+  transition: padding-left 0.25s ease, background 0.25s ease;
 }
 
 .project-row:hover {
-  padding-left: 8px;
+  padding-left: 10px;
+  background: var(--bg-alt);
 }
 
 .project-media {
