@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function formatDate(isoString) {
     return new Date(isoString).toLocaleDateString('en-US', {
       year: 'numeric',
-      month: 'short',
+      month: 'long',
       day: 'numeric'
     });
   }
