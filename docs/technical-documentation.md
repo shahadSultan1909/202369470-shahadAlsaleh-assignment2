@@ -129,7 +129,7 @@ full content height):
 
 ```css
 .project-details { display: grid; grid-template-rows: 0fr; visibility: hidden;
-                   transition: grid-template-rows 0.35s ease, visibility 0.35s; }
+                   transition: grid-template-rows 0.25s ease-in-out, visibility 0.25s; }
 .project-details.open { grid-template-rows: 1fr; visibility: visible; }
 .details-inner { overflow: hidden; min-height: 0; }
 ```
@@ -221,7 +221,7 @@ fetch("https://api.github.com/repos/" + repo)
   ├─ response.ok is false (404, 403, 500…) → throw an Error
   └─ response.ok is true → response.json()
        → show "Created <date> · Updated <date>"
-catch   → show a friendly red error message + log details to the console
+catch   → show a friendly red error message + a Try again button, and log details to the console
 finally → remove the .is-loading class (stop the pulse)
 ```
 
@@ -233,15 +233,15 @@ finally → remove the .is-loading class (stop the pulse)
 - **Dates:** `created_at` and `pushed_at` (the date of the last code
   push, which is more meaningful than `updated_at`, which also changes
   when a repo is starred). Dates are formatted with
-  `toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })`,
+  `toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })`,
   for example `Jun 12, 2026`.
 - **Feedback states:**
 
 | State | What the user sees | CSS |
 |---|---|---|
 | Loading | "Loading GitHub info…" | `.is-loading` → `pulse` animation (opacity 1 → 0.4 → 1, infinite) |
-| Success | "Created Jun 12, 2026 · Updated Jun 12, 2026" | muted small text |
-| Error | "Couldn't load GitHub info. Please refresh the page or try again later." | `.is-error` → `var(--error)` color |
+| Success | "Created June 12, 2026 · Updated June 12, 2026" | muted small text |
+| Error | "We couldn't fetch GitHub data. Check your connection, then click Try again." plus a Try again button that reloads only that project | `.is-error` → `var(--error)` color |
 
 - **Specificity note:** the selector is `.project-body .repo-meta`
   (two classes) so it overrides the existing `.project-body p` rule
@@ -264,10 +264,10 @@ and **how** feedback is shown.
 | One validator per field | `validateName()`, `validateEmail()`, `validateMessage()`, each reusing the original `validateField()` helper, so the same rules run on submit, on blur, and while typing. |
 | Check on leaving a field | `blur` listener, only if the field is not empty, so tabbing through an empty form does not show errors. |
 | Errors clear as soon as fixed | `input` listener that re-validates only while the field has the `.invalid` class. |
-| Shake on submit | Invalid fields get a `.shake` class (`@keyframes shake`: ±6px horizontally over 0.4s). An `animationend` listener removes the class so the field can shake again on the next submit. |
+| Shake on submit | Invalid fields get a `.shake` class (`@keyframes shake`: ±6px horizontally over 0.7s). An `animationend` listener removes the class so the field can shake again on the next submit. |
 | Focus the first error | `invalidFields[0].input.focus()` (uses `Array.filter` to collect the invalid fields). |
 | Character counter | `input` listener updates "`n` / 10 characters minimum". It turns green (`.is-complete`) at 10. It uses `.trim().length`, the same as the validator. The minimum lives in one constant, `MIN_MESSAGE_LENGTH`. |
-| Personalized success | "Thanks, *FirstName*! Your message has been received. I'll get back to you soon. 🌸". Inserted with `textContent` (never `innerHTML`) so user input cannot inject HTML. |
+| Personalized success | "Thanks for reaching out, *FirstName*! I’ve received your message and will reply as soon as possible.". Inserted with `textContent` (never `innerHTML`) so user input cannot inject HTML. |
 | Success entrance | `@keyframes fade-slide-in` (fade in + slide down 8px). An `animation` is used instead of a `transition` because the element changes from `display: none`, which transitions cannot animate. |
 | Reliable auto-hide | The 5-second hide timer is stored in `successTimer` and cleared with `clearTimeout` on every submit, so an old timer cannot hide a newer message early. |
 | Counter reset | `updateCounter()` is called after `form.reset()`, because `reset()` does not fire `input` events. |
@@ -295,7 +295,7 @@ and **how** feedback is shown.
 
 | Situation | How the site responds |
 |---|---|
-| GitHub API unreachable, repo not found, or rate limit reached | Friendly message in red, with what to do next; details logged with `console.error`. Other projects still load. |
+| GitHub API unreachable, repo not found, or rate limit reached | Friendly message in red with a Try again button; details logged with `console.error`. Other projects still load. |
 | `localStorage` unavailable | Caught with `try/catch`; theme still works for the current visit. |
 | Invalid or empty form field | Inline error message, red border, shake, and focus moved to the first invalid field. |
 
