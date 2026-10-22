@@ -7,7 +7,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    /* Dark/Light Theme Toggle (saved in localStorage) */
+  /* Dark/Light Theme Toggle (saved in localStorage) */
   const root = document.documentElement;
   const themeToggle = document.getElementById('theme-toggle');
   const themeIcon = themeToggle.querySelector('.theme-icon');
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   greetingEl.textContent = greetingText;
 
-    /* Contact Form: validation, live feedback, and animations */
+  /* Contact Form: validation, live feedback, and animations */
   const form = document.getElementById('contact-form');
   const nameInput = document.getElementById('name');
   const emailInput = document.getElementById('email');
@@ -242,7 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-    /* GitHub Repo Info (fetched from the public GitHub API) */
+  /* GitHub Repo Info (fetched from the public GitHub API) */
   const repoMetaEls = document.querySelectorAll('.repo-meta[data-repo]');
 
   function formatDate(isoString) {

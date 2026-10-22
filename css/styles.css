@@ -25,7 +25,7 @@
 
   --shadow-soft: 0 20px 40px -20px rgba(199, 110, 140, 0.28);
 
-   --nav-bg: rgba(251, 246, 248, 0.82);
+  --nav-bg: rgba(251, 246, 248, 0.82);
   --error: #c15c73;
   --success-bg: #a9d2ba;
   --success-text: #3f6b52;
@@ -121,7 +121,7 @@ img {
   position: sticky;
   top: 0;
   z-index: 100;
-    background: var(--nav-bg);
+  background: var(--nav-bg);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
 }
@@ -684,6 +684,7 @@ img {
   0%, 100% { opacity: 1; }
   50%      { opacity: 0.4; }
 }
+
 /* =========================================
    Contact Section
    ========================================= */

@@ -1,0 +1,12 @@
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Editor settings
+.vscode/
+.idea/
+
+# AI evidence: submitted on Blackboard, not in the repository
+*-ai-evidence.zip
+conversations/
+artifacts/
