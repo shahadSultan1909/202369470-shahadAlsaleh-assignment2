@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const firstName = nameInput.value.trim().split(' ')[0];
-    successMsg.textContent = `Thanks for reaching out, ${firstName}! I’ve received your message and will reply as soon as possible. `;
+    successMsg.textContent = `Thanks for reaching out, ${firstName}! I’ve received your message and will reply as soon as possible.`;
     successMsg.classList.add('show');
 
     form.reset();
@@ -266,9 +266,24 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await response.json();
       metaEl.textContent = `Created ${formatDate(data.created_at)} · Updated ${formatDate(data.pushed_at)}`;
     } catch (error) {
-      metaEl.textContent = "We couldn't fetch GitHub data. Please refresh the page or try again in a moment.";
+      metaEl.textContent = "We couldn't fetch GitHub data. Check your connection, then click Try again.";
       metaEl.classList.add('is-error');
       console.error(`Failed to load GitHub info for ${repo}:`, error);
+
+      // Retry button: reloads only this project's GitHub info
+      const retryBtn = document.createElement('button');
+      retryBtn.type = 'button';
+      retryBtn.className = 'retry-btn';
+      retryBtn.textContent = 'Try again';
+
+      retryBtn.addEventListener('click', () => {
+        metaEl.classList.remove('is-error');
+        metaEl.classList.add('is-loading');
+        metaEl.textContent = 'Loading GitHub info…';
+        loadRepoInfo(metaEl);
+      });
+
+      metaEl.append(' ', retryBtn);
     } finally {
       metaEl.classList.remove('is-loading');
     }
