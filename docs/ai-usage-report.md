@@ -38,10 +38,7 @@ I understand technical explanations better in my first language.
 ## 2. Benefits & Challenges
 
 ### Benefits
-- **Learning while building:** instead of only receiving code, I got an
-  explanation for every line. Explanations in Arabic, with analogies,
-  helped me understand concepts like specificity and `localStorage`
-  much faster.
+- **Arabic explanations:** Claude explained the code in Arabic, which made it easier for me to understand difficult concepts and focus on the specific parts I did not understand.
 - **Planning first:** planning the whole assignment before coding helped
   me choose features that cover all requirements without doing
   unnecessary work.
@@ -50,6 +47,9 @@ I understand technical explanations better in my first language.
 - **Better code organization:** small commits for each step, comments for
   each feature, and reusable functions (for example, one validator per
   form field).
+- **Saving time:** Getting help with explanations and debugging made it easier to complete the assignment without spending too much time stuck on small problems.
+
+
 
 ### Challenges
 - **Placing code in the right spot:** several times I pasted code in the
@@ -66,13 +66,8 @@ I understand technical explanations better in my first language.
 - **Questioning the AI's assumptions:** Claude first described my
   Assignment 1 form as having a "bug" with the field border. I checked
   and explained that the bold border was actually the focus style, so it
-  was not a bug. I also did not notice the "light flash" Claude described
-  until I tested with a slow network in DevTools, so I asked why it
-  happens before deciding to fix it.
-- **Declaring AI use correctly:** at first I thought that if I typed the
-  code myself, the commit did not need an AI credit. I learned that what
-  matters is where the code came from, so every commit with AI-suggested
-  code includes `Assisted-by: Claude (Opus 5.5)`.
+  was not a bug.
+- **Testing and finding problems:** Some issues were not easy to notice at first, such as the brief flash that appeared when the page loaded. I tested the page using a slow network in DevTools to understand why it happened before deciding how to fix it.
 
 ---
 
@@ -95,6 +90,7 @@ I understand technical explanations better in my first language.
   and DevTools before committing, and writing clear commit messages.
 - **Academic integrity:** how to document AI use honestly, including
   commit attribution, a usage log, and keeping the AI's original output.
+- **Using AI responsibly:** I learned how to document my use of AI tools honestly and keep track of the help I received.
 
 ---
 
