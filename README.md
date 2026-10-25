@@ -65,7 +65,7 @@ No installation or build tools are required. This is a static website.
 
 > **Note:** An internet connection is needed to load the Google Fonts
 > and the live GitHub repository info. Without it, the site still works,
-> and the projects show a friendly error message with a **Try again** button. with a **Try again** button.
+> and the projects show a friendly error message with a **Try again** button.
 
 ---
 
